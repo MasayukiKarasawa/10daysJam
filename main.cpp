@@ -18,6 +18,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int playerY = 600;
 	int radius = 64;
 	//int color[10] = {};
+	int MyColor = 0;
 
 
 
@@ -50,6 +51,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case GAME:
+			if (keys[DIK_A] ) {
+				MyColor = 0;
+			}
+			if (keys[DIK_S] ) {
+				MyColor = 1;
+			}
+			if (keys[DIK_D] ) {
+				MyColor = 2;
+			}
+
 
 			break;
 		case SCORE:
@@ -71,6 +82,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			Novice::ScreenPrintf(0, 0, "Game");
+			Novice::ScreenPrintf(0, 20, "MyColor%d");
 			Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, WHITE, kFillModeSolid);
 			break;
 		case SCORE:
