@@ -19,6 +19,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int radius = 64;
 	//int color[10] = {};
 	int MyColor = 0;
+	int Speed = 10;
+
 
 
 
@@ -82,8 +84,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			Novice::ScreenPrintf(0, 0, "Game");
-			Novice::ScreenPrintf(0, 20, "MyColor%d");
+		
+			//自機
 			Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, WHITE, kFillModeSolid);
+
+			//敵
+			Novice::DrawEllipse(500, -100, radius, radius, 0.0f, WHITE, kFillModeSolid);
+
+
 			break;
 		case SCORE:
 			Novice::ScreenPrintf(0, 0, "Score");
