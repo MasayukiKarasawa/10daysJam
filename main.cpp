@@ -1,12 +1,22 @@
 #include <Novice.h>
 
 const char kWindowTitle[] = "カラサワブラザーズ";
-
+enum number {
+	TITLE,
+	MANUAL,
+	GAME,
+	SCORE
+};
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, 1280, 720);
+	Novice::Initialize(kWindowTitle, 600, 720);
+
+	int number = 0;
+
+
+
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -24,7 +34,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
+		switch (number)
+		{
+		case TITLE:
+			if (keys[DIK_SPACE]) {
+				number = 1;
+			}
+			break;
+		case MANUAL:
+			if (keys[DIK_SPACE]) {
+				number = 2;
+			}
+			break;
+		case GAME:
 
+			break;
+		case SCORE:
+
+			break;
+		}
 		///
 		/// ↑更新処理ここまで
 		///
