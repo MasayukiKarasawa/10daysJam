@@ -1,6 +1,6 @@
 #include <Novice.h>
 
-const char kWindowTitle[] = "カラサワブラザーズ";
+const char kWindowTitle[] = "切り替えの達人";
 enum number {
 	TITLE,
 	MANUAL,
