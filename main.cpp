@@ -12,7 +12,7 @@ enum number {
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, 1000, 720);
+	Novice::Initialize(kWindowTitle, 1280, 720);
 	
 
 	int number = 0;
@@ -85,7 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				for (int i = 0; i < 5; i++) {
 					if (enemyFlag[i] == 0) {
 						enemyFlag[i] = 1;
-						enemyX[i]=  rand() % 1000;
+						enemyX[i]=  rand() % 900;
 						enemyY[i] = rand() % 10;
 						color[i] = rand() % 3;
 						break;
@@ -130,6 +130,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			Novice::ScreenPrintf(0, 0, "Game");
+			Novice::DrawLine(1000, 0, 1000, 720, RED);
 			if (MyColor == 0) {
 				//自機
 				Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, RED, kFillModeSolid);
