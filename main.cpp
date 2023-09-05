@@ -11,10 +11,13 @@ enum number {
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, 600, 720);
+	Novice::Initialize(kWindowTitle, 1000, 720);
 
 	int number = 0;
-
+	int playerX = 500;
+	int playerY = 600;
+	int radius = 64;
+	//int color[10] = {};
 
 
 
@@ -37,12 +40,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (number)
 		{
 		case TITLE:
-			if (keys[DIK_SPACE]) {
+			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 1;
 			}
 			break;
 		case MANUAL:
-			if (keys[DIK_SPACE]) {
+			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 2;
 			}
 			break;
@@ -50,17 +53,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			break;
 		case SCORE:
-
+			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
+				number = 0;
+			}
 			break;
 		}
 		///
 		/// ↑更新処理ここまで
 		///
-
+		switch (number)
+		{
+		case TITLE:
+			Novice::ScreenPrintf(0, 0, "Title");
+			break;
+		case MANUAL:
+			Novice::ScreenPrintf(0, 0, "Manual");
+			break;
+		case GAME:
+			Novice::ScreenPrintf(0, 0, "Game");
+			Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, WHITE, kFillModeSolid);
+			break;
+		case SCORE:
+			Novice::ScreenPrintf(0, 0, "Score");
+			break;
+		}
 		///
 		/// ↓描画処理ここから
 		///
-
+	
 		///
 		/// ↑描画処理ここまで
 		///
