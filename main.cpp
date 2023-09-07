@@ -18,6 +18,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int number = 0;
 	int playerX = 500;
 	int playerY = 600;
+	
 	int radius = 64;
 	int enemyX[9] = {};
 	int enemyY[9] = {};
@@ -26,6 +27,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int enemySpeed = 5;
 	int enemyFlag[9] = {};
 	int color[9] = {};
+	int GameTimer = 1000;
+	int Flag = 1;
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -114,11 +117,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				     }
 				}
 			
+				//ゲームタイマー
+				GameTimer -= 1;
+				if (GameTimer == 0) {
+					number = 3;
+				}
+
 
 			break;
 		case SCORE:
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
+				GameTimer = 1000;
 			}
 			break;
 		}
@@ -138,6 +148,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			Novice::ScreenPrintf(0, 0, "Game");
+			Novice::ScreenPrintf(640, 0, "Timer%d",GameTimer);
 			Novice::DrawLine(1000, 0, 1000, 720, RED);
 			if (MyColor == 0) {
 				//自機
