@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int enemySpeed = 5;
 	int enemyFlag[9] = {};
 	int color[9] = {};
-	int GameTimer = 1000;
+	int GameTimer = 750;
 	//int Flag = 1;
 
 	// キー入力結果を受け取る箱
@@ -119,18 +119,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				//当たり判定
 				for (int i = 0; i < 9; i++) {
-
-
-
 					if (enemyFlag[i] == 1) {
-
 						int dx = abs(playerX - enemyX[i]);
 						int dz = abs(playerY - enemyY[i]);
-
-						if (dx < 90 && dz < 90) {
+                        if (dx < 90 && dz < 90 && MyColor == 0 && color[i] == 0 ) {
 							enemyFlag[i] = 0;
 						}
-
+						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] == 1 ) {
+							enemyFlag[i] = 0;
+						}
+						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] == 2 ) {
+							enemyFlag[i] = 0;
+						}
 					}
 				}
 
@@ -146,9 +146,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SCORE:
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
-				GameTimer = 1000;
+				GameTimer = 750;
+				for (int i = 0; i < 9; i++) {
+					enemyY[i] = 0;
+				}
 			}
-			break;
+				
+			
 		}
 		///
 		/// ↑更新処理ここまで
