@@ -218,7 +218,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 			Novice::DrawSprite(0, 0, Clear, 1, 1, 0.0f, WHITE);
 			
-			Novice::ScreenPrintf(0, 0, "Score");
+			Novice::DrawSprite(450, 360, Score, 1, 1, 0.0f, WHITE);
 
 			break;
 		}
