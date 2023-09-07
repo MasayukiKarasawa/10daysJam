@@ -65,11 +65,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			//移動
-			if (keys[DIK_A] || keys[DIK_LEFT]) {
+			if (keys[DIK_A]) {
 				playerX -= Speed;
 
 			}
-			if (keys[DIK_D] || keys[DIK_RIGHT]) {
+			if (keys[DIK_D]) {
 				playerX += Speed;
 			}
 			if (playerX + Playerradius>= 1000) {
@@ -79,13 +79,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				playerX = 0+Playerradius;
 			}
 			//色変更
-			if (keys[DIK_J] ) {
+			if (keys[DIK_LEFT] ) {
 				MyColor = 0;
 			}
-			if (keys[DIK_K] ) {
+			if (keys[DIK_DOWN] ) {
 				MyColor = 1;
 			}
-			if (keys[DIK_L] ) {
+			if (keys[DIK_RIGHT] ) {
 				MyColor = 2;
 			}
 
