@@ -85,7 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//敵乱数
 			if (rand() % 100 == 0) {
 				int x = rand() % 900;
-				int y = rand() % 300;
+				int y = rand() % 9;
 				for (int e = 0; e < 3; e++) {
 					for (int i = 0; i < 9; i++) {
 							if (enemyFlag[i] == 0) {
@@ -103,7 +103,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				
 			}
 			//敵移動
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 9; i++) {
 					if (enemyFlag[i] == 1) {
                    enemyY[i] += enemySpeed;
 					}
