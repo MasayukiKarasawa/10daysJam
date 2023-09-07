@@ -18,7 +18,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int number = 0;
 	int playerX = 500;
 	int playerY = 600;
-	
+	int Playerradius = 64;
 	int radius = 64;
 	int enemyX[9] = {};
 	int enemyY[9] = {};
@@ -28,7 +28,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int enemyFlag[9] = {};
 	int color[9] = {};
 	int GameTimer = 1000;
-	int Flag = 1;
+	//int Flag = 1;
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -67,11 +67,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (keys[DIK_D] || keys[DIK_RIGHT]) {
 				playerX += Speed;
 			}
-			if (playerX + radius>= 1000) {
-				playerX = 1000-radius;
+			if (playerX + Playerradius>= 1000) {
+				playerX = 1000-Playerradius;
 			}
-			if (playerX - radius<= 0) {
-				playerX = 0+radius;
+			if (playerX - Playerradius<= 0) {
+				playerX = 0+Playerradius;
 			}
 			//色変更
 			if (keys[DIK_J] ) {
@@ -116,6 +116,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						enemyY[i] = 0;
 				     }
 				}
+
+				//当たり判定
+				for (int i = 0; i < 9; i++) {
+
+
+
+					if (enemyFlag[i] == 1) {
+
+						int dx = abs(playerX - enemyX[i]);
+						int dz = abs(playerY - enemyY[i]);
+
+						if (dx < 90 && dz < 90) {
+							enemyFlag[i] = 0;
+						}
+
+					}
+				}
+
 			
 				//ゲームタイマー
 				GameTimer -= 1;
@@ -152,21 +170,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawLine(1000, 0, 1000, 720, RED);
 			if (MyColor == 0) {
 				//自機
-				Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, RED, kFillModeSolid);
+				Novice::DrawEllipse(playerX, playerY, Playerradius, Playerradius, 0.0f, RED, kFillModeSolid);
 		    }
 			if (MyColor == 1) {
 				//自機
-				Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, BLUE, kFillModeSolid);
+				Novice::DrawEllipse(playerX, playerY, Playerradius, Playerradius, 0.0f, BLUE, kFillModeSolid);
 			}
 			if (MyColor == 2) {
 				//自機
-				Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, GREEN, kFillModeSolid);
+				Novice::DrawEllipse(playerX, playerY, Playerradius, Playerradius, 0.0f, GREEN, kFillModeSolid);
 			}
+
 			
+
 				for (int i = 0; i < 9; i++) {
+					
+					
 					if (enemyFlag[i] == 1) {
 						if (color[i] == 0) {
-						    //敵
+							//敵
 							Novice::DrawEllipse(enemyX[i], enemyY[i], radius, radius, 0.0f, RED, kFillModeSolid);
 						}
 						if (color[i] == 1) {
@@ -178,7 +200,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							Novice::DrawEllipse(enemyX[i], enemyY[i], radius, radius, 0.0f, GREEN, kFillModeSolid);
 						}
 					}
-				
+
 				}
 			
 			
