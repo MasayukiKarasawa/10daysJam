@@ -31,6 +31,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//int Flag = 1;
 
 	int Clear = Novice::LoadTexture("./Clear.png");
+	int TIME = Novice::LoadTexture("./TIME.png");
+	int Score = Novice::LoadTexture("./Score.png");
+
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -207,7 +210,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				}
 				Novice::ScreenPrintf(1000, 0, "TIME");
-			
+				Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(1000, 360, Score, 1, 1, 0.0f, WHITE);
 
 			break;
 		case SCORE:
