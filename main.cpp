@@ -30,6 +30,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int GameTimer = 750;
 	//int Flag = 1;
 
+	int Clear = Novice::LoadTexture("./Clear.png");
+
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -185,8 +187,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawEllipse(playerX, playerY, Playerradius, Playerradius, 0.0f, GREEN, kFillModeSolid);
 			}
 
-			
-
 				for (int i = 0; i < 9; i++) {
 					
 					
@@ -206,12 +206,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 
 				}
-			
+				Novice::ScreenPrintf(1000, 0, "TIME");
 			
 
 			break;
 		case SCORE:
+			
+			Novice::DrawSprite(0, 0, Clear, 1, 1, 0.0f, WHITE);
+			
 			Novice::ScreenPrintf(0, 0, "Score");
+
 			break;
 		}
 	
