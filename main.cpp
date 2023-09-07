@@ -19,13 +19,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int playerX = 500;
 	int playerY = 600;
 	int radius = 64;
-	int enemyX[10] = {};
-	int enemyY[10] = {};
+	int enemyX[9] = {};
+	int enemyY[9] = {};
 	int MyColor = 0;
 	int Speed = 10;
 	int enemySpeed = 5;
-	int enemyFlag[10] = {};
-	int color[3] = {0,1,2};
+	int enemyFlag[9] = {};
+	int color[9] = {};
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -80,19 +80,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (keys[DIK_L] ) {
 				MyColor = 2;
 			}
+
+
 			//敵乱数
 			if (rand() % 100 == 0) {
-				for (int i = 0; i < 5; i++) {
-					if (enemyFlag[i] == 0) {
-						enemyFlag[i] = 1;
-						enemyX[i]=  rand() % 900;
-						enemyY[i] = rand() % 10;
-						color[i] = rand() % 3;
-						break;
+				int x = rand() % 900;
+				int y = rand() % 300;
+				for (int e = 0; e < 3; e++) {
+					for (int i = 0; i < 9; i++) {
+							if (enemyFlag[i] == 0) {
+								enemyFlag[i] = 1;
+								
+								enemyX[i] = x;
+								enemyY[i] = y-e*130;
+								color[i] = rand() % 3;
+								break;
 
-					}
+							}
 					
+					}
 				}
+				
 			}
 			//敵移動
 				for (int i = 0; i < 10; i++) {
@@ -144,7 +152,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawEllipse(playerX, playerY, radius, radius, 0.0f, GREEN, kFillModeSolid);
 			}
 			
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 9; i++) {
 					if (enemyFlag[i] == 1) {
 						if (color[i] == 0) {
 						    //敵
