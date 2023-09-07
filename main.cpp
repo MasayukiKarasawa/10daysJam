@@ -83,8 +83,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 			//敵乱数
-			if (rand() % 100 == 0) {
-				int x = rand() % 900;
+			if (rand() % 50 == 0) {
+				int x = rand() % 900+64;
 				int y = rand() % 9;
 				for (int e = 0; e < 3; e++) {
 					for (int i = 0; i < 9; i++) {
