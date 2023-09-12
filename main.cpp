@@ -37,6 +37,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int GameScore = 0;
 
 	int Title = Novice::LoadTexture("./Title.png");
+	int Manual = Novice::LoadTexture("./Manual.png");
+	int Stage = Novice::LoadTexture("./Stage.png");
 	int Clear = Novice::LoadTexture("./Clear.png");
 	int TIME = Novice::LoadTexture("./TIME.png");
 	int Score = Novice::LoadTexture("./Score.png");
@@ -250,10 +252,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawSprite(0, 0, Title, 1, 1, 0.0f, WHITE);
 			break;
 		case MANUAL:
-			Novice::ScreenPrintf(0, 0, "Manual");
+			//Novice::ScreenPrintf(0, 0, "Manual");
+			Novice::DrawSprite(0, 0, Manual, 1, 1, 0.0f, WHITE);
 			break;
 		case GAME:
-
+            Novice::DrawSprite(0, 0, Stage, 1, 1, 0.0f, WHITE);
 			//タイマー
 
 		    Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
@@ -339,7 +342,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				
 				
-
+				
 			break;
 		case SCORE:
 			
