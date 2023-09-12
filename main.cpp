@@ -239,6 +239,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				musicFlag = 0;
 				Novice::StopAudio(Last);
 			}
+			break;
 		}
 		///
 		/// ↑更新処理ここまで
@@ -252,7 +253,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawSprite(0, 0, Title, 1, 1, 0.0f, WHITE);
 			break;
 		case MANUAL:
-			//Novice::ScreenPrintf(0, 0, "Manual");
 			Novice::DrawSprite(0, 0, Manual, 1, 1, 0.0f, WHITE);
 			break;
 		case GAME:
