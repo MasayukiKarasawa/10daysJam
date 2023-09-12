@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 	
-
+	
 	int number = 0;
 	int playerX = 500;
 	int playerY = 600;
@@ -27,17 +27,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int enemySpeed = 5;
 	int enemyFlag[9] = {};
 	int color[9] = {};
-	int GameTimer = 750;
+	int GameTimer = 1000;
 	int GameScore = 0;
 
-   // int Number = GameScore;
-	int eachNumber[5] = {};
-	
-	
+	int Title = Novice::LoadTexture("./Title.png");
 	int Clear = Novice::LoadTexture("./Clear.png");
 	int TIME = Novice::LoadTexture("./TIME.png");
 	int Score = Novice::LoadTexture("./Score.png");
-	int NumberSprite = Novice::LoadTexture("./Number.png");
+	int ScoreSprite = Novice::LoadTexture("./number.png");
+
+	int eachNumber[5] = {};//各桁の値
+	int N = 0;//表示する数字
+	int keta = 10000;//桁
+	int TimeNumber[5] = {};
+	int T = 0;
+	int TimeKeta = 10000;
+
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -68,17 +73,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case GAME:
-			
-			eachNumber[0] = GameScore / 10000;
-			GameScore = GameScore % 10000;
-			eachNumber[1] = GameScore / 1000;
-			GameScore = GameScore % 1000;
-			eachNumber[2] = GameScore / 100;
-			GameScore = GameScore % 100;
-			eachNumber[3] = GameScore / 10;
-			GameScore = GameScore % 10;
-			eachNumber[4] = GameScore / 1;
-			GameScore = GameScore % 1;
 			//移動
 			if (keys[DIK_A]) {
 				playerX -= Speed;
@@ -164,9 +158,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					number = 3;
 				}
 
-
-
-
 			break;
 		case SCORE:
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
@@ -176,8 +167,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					enemyY[i] = 0;
 				}
 			}
-				
-			
 		}
 		///
 		/// ↑更新処理ここまで
@@ -188,14 +177,58 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (number)
 		{
 		case TITLE:
-			Novice::ScreenPrintf(0, 0, "Title");
+			Novice::DrawSprite(0, 0, Title, 1, 1, 0.0f, WHITE);
 			break;
 		case MANUAL:
 			Novice::ScreenPrintf(0, 0, "Manual");
 			break;
 		case GAME:
-			Novice::ScreenPrintf(0, 0, "Game");
-			Novice::ScreenPrintf(640, 0, "Timer%d",GameTimer);
+		    Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
+			T = GameTimer;
+			TimeKeta = 10000;
+			for (int i = 0; i < 5; i++) {
+				TimeNumber[i] = T / TimeKeta;//今の桁の値
+				T = T % TimeKeta;//次の桁以下の値を取り出す
+				TimeKeta = TimeKeta / 10;//桁を進める
+			}
+			for (int i = 0; i < 5; i++) {
+
+				Novice::DrawQuad(
+					1000 + i * 26, 30,			// 四角形の左上座標
+					1032 + i * 26, 30,		// 四角形の右上座標
+					1000 + i * 26, 94,		// 四角形の左下座標
+					1032 + i * 26, 94,	// 四角形の右下座標
+					TimeNumber[i] * 32, 0, // 画像上の描画したい範囲左上座標
+					32, 64,			// 画像上の描画したい横幅、縦幅
+					ScoreSprite,			// テクスチャハンドル
+					0xFFFFFFFF			// 色
+				);
+			}
+			
+            Novice::DrawSprite(1000, 360, Score, 1, 1, 0.0f, WHITE); 
+		    N = GameScore;//表示する数字
+		    keta = 10000;//桁
+
+		    for (int i = 0; i < 5; i++) {
+					eachNumber[i] = N / keta;//今の桁の値
+					N = N % keta;//次の桁以下の値を取り出す
+					keta = keta / 10;//桁を進める
+				}
+			for (int i = 0; i < 5; i++) {
+				
+				Novice::DrawQuad(
+					1000+ i *26 , 400,			// 四角形の左上座標
+					1032 + i * 26, 400,		// 四角形の右上座標
+					1000 + i * 26, 464,		// 四角形の左下座標
+					1032 + i * 26, 464,	// 四角形の右下座標
+					eachNumber[i]*32, 0, // 画像上の描画したい範囲左上座標
+					32, 64,			// 画像上の描画したい横幅、縦幅
+					ScoreSprite,			// テクスチャハンドル
+					0xFFFFFFFF			// 色
+				);
+			}
+				
+				
 			Novice::DrawLine(1000, 0, 1000, 720, RED);
 			if (MyColor == 0) {
 				//自機
@@ -229,20 +262,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 
 				}
-				for (int i = 0; i < 5; i++) {
-					Novice::DrawSprite(1000, 380, NumberSprite, 1, 1, 0.0f, WHITE);
-				}
-				Novice::ScreenPrintf(1000, 0, "TIME");
-				Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(1000, 360, Score, 1, 1, 0.0f, WHITE);
+				
+				
 
 			break;
 		case SCORE:
 			
 			Novice::DrawSprite(0, 0, Clear, 1, 1, 0.0f, WHITE);
 			
-			Novice::DrawSprite(450, 360, Score, 1, 1, 0.0f, WHITE);
+			Novice::DrawSprite(450, 300, Score, 1, 1, 0.0f, WHITE);
+			
+			for (int i = 0; i < 5; i++) {
 
+				Novice::DrawQuad(
+					600 + i * 26, 290,			// 四角形の左上座標
+					632 + i * 26, 290,		// 四角形の右上座標
+					600 + i * 26, 354,		// 四角形の左下座標
+					632 + i * 26, 354,	// 四角形の右下座標
+					eachNumber[i] * 32, 0, // 画像上の描画したい範囲左上座標
+					32, 64,			// 画像上の描画したい横幅、縦幅
+					ScoreSprite,			// テクスチャハンドル
+					0xFFFFFFFF			// 色
+				);
+			}
 			break;
 		}
 	
