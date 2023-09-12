@@ -54,6 +54,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int Sub = Novice::LoadAudio("./Sub.mp3");
 	int Main = Novice::LoadAudio("./Main.mp3");
 	int Last = Novice::LoadAudio("./Last.mp3");
+	int Yes = Novice::LoadAudio("./Yes.wav");
+	int No = Novice::LoadAudio("./No.wav");
+
 
 	//スコア表示
 	int eachNumber[5] = {};//各桁の値
@@ -192,36 +195,42 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
                         if (dx < 90 && dz < 90 && MyColor == 0 && color[i] == 0 ) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
+							Novice::PlayAudio(Yes, 0, 3);
 						}
 						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] == 1 ) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
+							Novice::PlayAudio(Yes, 0, 3);
 						}
 						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] == 2 ) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
+							Novice::PlayAudio(Yes, 0, 3);
 						}
 						//違ったら減点
 						if (dx < 90 && dz < 90 && MyColor == 0 && color[i] != 0) {
 							enemyFlag[i] = 0;
 							PlayerLife -= 1;
 							GameScore -= 10;
+							Novice::PlayAudio(No, 0, 3);
 						}
 						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] != 1) {
 							enemyFlag[i] = 0;
 							PlayerLife -= 1;
 							GameScore -= 10;
+							Novice::PlayAudio(No, 0, 3);
 						}
 						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] != 2) {
 							enemyFlag[i] = 0;
 							PlayerLife -= 1;
 							GameScore -= 10;
+							Novice::PlayAudio(No, 0, 3);
 						}
 					}
 				}
 				
 				if (musicFlag == 0) {
-					Novice::PlayAudio(Main, 0, 1);
+					Novice::PlayAudio(Main, 0, 0.5);
 					musicFlag = 1;
 				}
 
