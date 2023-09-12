@@ -229,7 +229,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				//ゲームタイマー
 				//GameTimer -= 1;
 				//ライフ
-				if (PlayerLife == 0) {
+				if (PlayerLife <= 0) {
 					number = 3;
 					musicFlag = 0;
 					Novice::StopAudio(Main);
@@ -268,9 +268,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (number)
 		{
 		case TITLE:
-			Novice::ScreenPrintf(0, 700, "KamataEngineのバグか仕様で2週目のプレイの際にBGMが重なってでます。ご了承ください。", BLACK);
 			Novice::DrawSprite(0, 0, Title, 1, 1, 0.0f, WHITE);
-			
 			break;
 		case MANUAL:
 			Novice::DrawSprite(0, 0, Manual, 1, 1, 0.0f, WHITE);
