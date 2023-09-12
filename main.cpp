@@ -42,6 +42,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int Score = Novice::LoadTexture("./Score.png");
 	int ScoreSprite = Novice::LoadTexture("./number.png");
 
+	int Start = Novice::LoadAudio("./Start.mp3");
+	int Sub = Novice::LoadAudio("./Sub.mp3");
+	int Main = Novice::LoadAudio("./Main.mp3");
+	int Last = Novice::LoadAudio("./Last.mp3");
+
 
 	int eachNumber[5] = {};//各桁の値
 	int N = 0;//表示する数字
@@ -49,6 +54,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int TimeNumber[5] = {};
 	int T = 0;
 	int TimeKeta = 10000;
+
+	int musicFlag = 0;
 
 
 	// キー入力結果を受け取る箱
@@ -70,14 +77,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (number)
 		{
 		case TITLE:
+			
+
+			if (musicFlag == 0) {
+					Novice::PlayAudio(Start, 0, 1);
+					musicFlag = 1;
+			}
+			
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 1;
+				musicFlag = 0;
+				Novice::StopAudio(Start);
 			}
+
+			
 			break;
 		case MANUAL:
+			
+			if (musicFlag == 0) {
+				Novice::PlayAudio(Sub,0,1);
+				musicFlag = 1;
+			}
+
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 2;
+				musicFlag = 0;
+				Novice::StopAudio(Sub);
 			}
+
+			
+			
+
 			break;
 		case GAME:
 			//移動
@@ -171,15 +201,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						}
 					}
 				}
+				
+				if (musicFlag == 0) {
+					Novice::PlayAudio(Main, 0, 1);
+					musicFlag = 1;
+				}
+
+				
 				//ゲームタイマー
 				GameTimer -= 1;
 				if (GameTimer == 0) {
 					number = 3;
+					musicFlag = 0;
+					Novice::StopAudio(Main);
 				}
+
+				
 
 			break;
 		case SCORE:
 			//初期化
+
+			if (musicFlag == 0) {
+				Novice::PlayAudio(Last, 0, 1);
+				musicFlag = 1;
+			}
+
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
 				GameTimer = 1000;
@@ -187,6 +234,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				for (int i = 0; i < 9; i++) {
 					enemyY[i] = 0;
 				}
+				musicFlag = 0;
+				Novice::StopAudio(Last);
 			}
 		}
 		///
