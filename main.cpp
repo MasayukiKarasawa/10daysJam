@@ -90,6 +90,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				number = 1;
 				musicFlag = 0;
 				Novice::StopAudio(Start);
+				
 			}
 
 			
