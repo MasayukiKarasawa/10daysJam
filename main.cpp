@@ -28,12 +28,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int enemyFlag[9] = {};
 	int color[9] = {};
 	int GameTimer = 750;
-	//int Flag = 1;
+	int GameScore = 0;
 
+   // int Number = GameScore;
+	int eachNumber[5] = {};
+	
+	
 	int Clear = Novice::LoadTexture("./Clear.png");
 	int TIME = Novice::LoadTexture("./TIME.png");
 	int Score = Novice::LoadTexture("./Score.png");
-
+	int NumberSprite = Novice::LoadTexture("./Number.png");
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -64,6 +68,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case GAME:
+			
+			eachNumber[0] = GameScore / 10000;
+			GameScore = GameScore % 10000;
+			eachNumber[1] = GameScore / 1000;
+			GameScore = GameScore % 1000;
+			eachNumber[2] = GameScore / 100;
+			GameScore = GameScore % 100;
+			eachNumber[3] = GameScore / 10;
+			GameScore = GameScore % 10;
+			eachNumber[4] = GameScore / 1;
+			GameScore = GameScore % 1;
 			//移動
 			if (keys[DIK_A]) {
 				playerX -= Speed;
@@ -129,12 +144,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						int dz = abs(playerY - enemyY[i]);
                         if (dx < 90 && dz < 90 && MyColor == 0 && color[i] == 0 ) {
 							enemyFlag[i] = 0;
+							GameScore += 100;
 						}
 						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] == 1 ) {
 							enemyFlag[i] = 0;
+							GameScore += 100;
 						}
 						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] == 2 ) {
 							enemyFlag[i] = 0;
+							GameScore += 100;
 						}
 					}
 				}
@@ -145,6 +163,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				if (GameTimer == 0) {
 					number = 3;
 				}
+
+
 
 
 			break;
@@ -208,6 +228,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						}
 					}
 
+				}
+				for (int i = 0; i < 5; i++) {
+					Novice::DrawSprite(1000, 380, NumberSprite, 1, 1, 0.0f, WHITE);
 				}
 				Novice::ScreenPrintf(1000, 0, "TIME");
 				Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
