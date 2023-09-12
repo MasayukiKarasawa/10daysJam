@@ -148,6 +148,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
 						}
+						if (dx < 90 && dz < 90 && MyColor == 0 && color[i] != 0) {
+							enemyFlag[i] = 0;
+							GameScore -= 10;
+						}
+						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] != 1) {
+							enemyFlag[i] = 0;
+							GameScore -= 10;
+						}
+						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] != 2) {
+							enemyFlag[i] = 0;
+							GameScore -= 10;
+						}
 					}
 				}
 
@@ -162,7 +174,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SCORE:
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
-				GameTimer = 750;
+				GameTimer = 1000;
+				GameScore = 0;
 				for (int i = 0; i < 9; i++) {
 					enemyY[i] = 0;
 				}
