@@ -14,19 +14,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 	
-	
+	//シーン
 	int number = 0;
+
+	//自機
 	int playerX = 500;
 	int playerY = 600;
 	int Playerradius = 64;
-	int radius = 64;
-	int enemyX[9] = {};
-	int enemyY[9] = {};
-	int MyColor = 0;
+    int MyColor = 0;
 	int Speed = 10;
+
+	//敵
+    int enemyX[9] = {};
+	int enemyY[9] = {};
+	int radius = 64;
 	int enemySpeed = 5;
 	int enemyFlag[9] = {};
 	int color[9] = {};
+
+	//スコア・タイマー
 	int GameTimer = 1000;
 	int GameScore = 0;
 
@@ -35,6 +41,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int TIME = Novice::LoadTexture("./TIME.png");
 	int Score = Novice::LoadTexture("./Score.png");
 	int ScoreSprite = Novice::LoadTexture("./number.png");
+
 
 	int eachNumber[5] = {};//各桁の値
 	int N = 0;//表示する数字
@@ -136,6 +143,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					if (enemyFlag[i] == 1) {
 						int dx = abs(playerX - enemyX[i]);
 						int dz = abs(playerY - enemyY[i]);
+						//合ってたら加点
                         if (dx < 90 && dz < 90 && MyColor == 0 && color[i] == 0 ) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
@@ -148,6 +156,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							enemyFlag[i] = 0;
 							GameScore += 100;
 						}
+						//違ったら減点
 						if (dx < 90 && dz < 90 && MyColor == 0 && color[i] != 0) {
 							enemyFlag[i] = 0;
 							GameScore -= 10;
@@ -162,8 +171,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						}
 					}
 				}
-
-			
 				//ゲームタイマー
 				GameTimer -= 1;
 				if (GameTimer == 0) {
@@ -172,6 +179,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			break;
 		case SCORE:
+			//初期化
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
 				GameTimer = 1000;
@@ -196,6 +204,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::ScreenPrintf(0, 0, "Manual");
 			break;
 		case GAME:
+
+			//タイマー
+
 		    Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
 			T = GameTimer;
 			TimeKeta = 10000;
@@ -218,6 +229,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				);
 			}
 			
+			//スコア
+
             Novice::DrawSprite(1000, 360, Score, 1, 1, 0.0f, WHITE); 
 		    N = GameScore;//表示する数字
 		    keta = 10000;//桁
