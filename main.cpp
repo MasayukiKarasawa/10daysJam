@@ -235,8 +235,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					Novice::StopAudio(Main);
 				}
 
-				
-
 			break;
 		case SCORE:
 			//初期化
