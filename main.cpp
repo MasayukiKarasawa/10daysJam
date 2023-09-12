@@ -23,6 +23,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int Playerradius = 64;
     int MyColor = 0;
 	int Speed = 10;
+	int PlayerLife = 3;
+
 
 	//敵
     int enemyX[9] = {};
@@ -33,14 +35,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int color[9] = {};
 
 	//スコア・タイマー
-	int GameTimer = 1000;
+	//int GameTimer = 1000;
 	int GameScore = 0;
 
 	int Title = Novice::LoadTexture("./Title.png");
 	int Manual = Novice::LoadTexture("./Manual.png");
 	int Stage = Novice::LoadTexture("./Stage.png");
 	int Clear = Novice::LoadTexture("./Clear.png");
-	int TIME = Novice::LoadTexture("./TIME.png");
+	int LIFE = Novice::LoadTexture("./LIFE.png");
+	int One = Novice::LoadTexture("./1.png");
+	int Two = Novice::LoadTexture("./2.png");
+	int Three = Novice::LoadTexture("./3.png");
+	//int TIME = Novice::LoadTexture("./TIME.png");
 	int Score = Novice::LoadTexture("./Score.png");
 	int ScoreSprite = Novice::LoadTexture("./number.png");
 
@@ -49,16 +55,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int Main = Novice::LoadAudio("./Main.mp3");
 	int Last = Novice::LoadAudio("./Last.mp3");
 
-
+	//スコア表示
 	int eachNumber[5] = {};//各桁の値
 	int N = 0;//表示する数字
 	int keta = 10000;//桁
-	int TimeNumber[5] = {};
-	int T = 0;
-	int TimeKeta = 10000;
+	//int TimeNumber[5] = {};
+	//int T = 0;
+	//int TimeKeta = 10000;
 
 	int musicFlag = 0;
-
+		
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -104,8 +110,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 2;
+				GameScore = 0;
+				PlayerLife = 3;
+				for (int i = 0; i < 9; i++) {
+					enemyY[i] = 0;
+				}
 				musicFlag = 0;
 				Novice::StopAudio(Sub);
+
 			}
 
 			
@@ -192,14 +204,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						//違ったら減点
 						if (dx < 90 && dz < 90 && MyColor == 0 && color[i] != 0) {
 							enemyFlag[i] = 0;
+							PlayerLife -= 1;
 							GameScore -= 10;
 						}
 						if (dx < 90 && dz < 90 && MyColor == 1 && color[i] != 1) {
 							enemyFlag[i] = 0;
+							PlayerLife -= 1;
 							GameScore -= 10;
 						}
 						if (dx < 90 && dz < 90 && MyColor == 2 && color[i] != 2) {
 							enemyFlag[i] = 0;
+							PlayerLife -= 1;
 							GameScore -= 10;
 						}
 					}
@@ -210,10 +225,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					musicFlag = 1;
 				}
 
-				
+			
 				//ゲームタイマー
-				GameTimer -= 1;
-				if (GameTimer == 0) {
+				//GameTimer -= 1;
+				//ライフ
+				if (PlayerLife == 0) {
 					number = 3;
 					musicFlag = 0;
 					Novice::StopAudio(Main);
@@ -232,8 +248,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 				number = 0;
-				GameTimer = 1000;
+				//GameTimer = 1000;
 				GameScore = 0;
+				PlayerLife = 3;
 				for (int i = 0; i < 9; i++) {
 					enemyY[i] = 0;
 				}
@@ -251,36 +268,48 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (number)
 		{
 		case TITLE:
+			Novice::ScreenPrintf(0, 700, "KamataEngineのバグか仕様で2週目のプレイの際にBGMが重なってでます。ご了承ください。", BLACK);
 			Novice::DrawSprite(0, 0, Title, 1, 1, 0.0f, WHITE);
+			
 			break;
 		case MANUAL:
 			Novice::DrawSprite(0, 0, Manual, 1, 1, 0.0f, WHITE);
 			break;
 		case GAME:
             Novice::DrawSprite(0, 0, Stage, 1, 1, 0.0f, WHITE);
-			//タイマー
-
-		    Novice::DrawSprite(1000, 0, TIME, 1, 1, 0.0f, WHITE);
-			T = GameTimer;
-			TimeKeta = 10000;
-			for (int i = 0; i < 5; i++) {
-				TimeNumber[i] = T / TimeKeta;//今の桁の値
-				T = T % TimeKeta;//次の桁以下の値を取り出す
-				TimeKeta = TimeKeta / 10;//桁を進める
+			
+			//ライフ
+		    Novice::DrawSprite(1000, 0, LIFE, 1, 1, 0.0f, WHITE);
+			if (PlayerLife == 3) {
+				Novice::DrawSprite(1000, 60, Three, 1, 1, 0.0f, WHITE);
 			}
-			for (int i = 0; i < 5; i++) {
-
-				Novice::DrawQuad(
-					1000 + i * 26, 30,			// 四角形の左上座標
-					1032 + i * 26, 30,		// 四角形の右上座標
-					1000 + i * 26, 94,		// 四角形の左下座標
-					1032 + i * 26, 94,	// 四角形の右下座標
-					TimeNumber[i] * 32, 0, // 画像上の描画したい範囲左上座標
-					32, 64,			// 画像上の描画したい横幅、縦幅
-					ScoreSprite,			// テクスチャハンドル
-					0xFFFFFFFF			// 色
-				);
+			if (PlayerLife == 2) {
+				Novice::DrawSprite(1000, 60, Two, 1, 1, 0.0f, WHITE);
 			}
+			if (PlayerLife == 1) {
+				Novice::DrawSprite(1000, 60, One, 1, 1, 0.0f, WHITE);
+			}
+            //タイマー
+			//T = GameTimer;
+			//TimeKeta = 10000;
+			//for (int i = 0; i < 5; i++) {
+			//	TimeNumber[i] = T / TimeKeta;//今の桁の値
+			//	T = T % TimeKeta;//次の桁以下の値を取り出す
+			//	TimeKeta = TimeKeta / 10;//桁を進める
+			//}
+			//for (int i = 0; i < 5; i++) {
+
+			//	Novice::DrawQuad(
+			//		1000 + i * 26, 30,			// 四角形の左上座標
+			//		1032 + i * 26, 30,		// 四角形の右上座標
+			//		1000 + i * 26, 94,		// 四角形の左下座標
+			//		1032 + i * 26, 94,	// 四角形の右下座標
+			//		TimeNumber[i] * 32, 0, // 画像上の描画したい範囲左上座標
+			//		32, 64,			// 画像上の描画したい横幅、縦幅
+			//		ScoreSprite,			// テクスチャハンドル
+			//		0xFFFFFFFF			// 色
+			//	);
+			//}
 			
 			//スコア
 
